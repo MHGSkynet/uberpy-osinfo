@@ -5,6 +5,14 @@
 #
 #		Class to get operating system information, IN A STANDARD FORMAT
 #
+#   Supported OSes:
+#       Windows         10, 11?
+#       Cygwin          all versions
+#       Debian          10, 11
+#       Ubuntu          20, 22
+#       CentOS          
+#       OpenSUSE        Tumbleweed
+#
 #	Copyrignt: (c) 2023, Kurt Schulte
 #
 #	History
@@ -259,7 +267,7 @@ class OsInfo(object):
 
                 # Unknown Linux
                 if not matched:
-                    print('Unknown flavor of linux! {}'.format())
+                    print('Unknown flavor of linux! {}'.format(self._uname_sysname))
        
 
             # Unknown flavor Linux
