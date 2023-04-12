@@ -57,7 +57,7 @@ class OsInfo(object):
     _version            = 'Unknown'                 # Major/minor version                                       20.04
     _revision           = 'Unknown'                 # Complete version id                                       20.04.6 LTS
     _flavverflav        = 'Unknown'                 # Flavor, Major version, and Minor version, no spaces       Ubuntu20.04
-    _desktop            = 'Unknown'                 # Desktop framework                                         Gnome, xfc
+    _desktop            = 'Unknown'                 # Desktop framework                                         Gnome, XFCE, KDE, Windows
     
     _isWindows          = False                     # OS is Windows
     _isWsl              = False                     # OS is Windows Subsystem for Linux of some sort
@@ -179,6 +179,8 @@ class OsInfo(object):
                 self._barfd('Is LINUX')
                 self._isLinux   = True
                 self._type      = 'Linux'
+
+                self._desktop   = self._getLinuxDesktop()
 
                 # WSL
                 match = re.match(r'.*WSL.*',self._uname_release)
