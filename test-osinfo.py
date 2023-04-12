@@ -5,11 +5,11 @@
 #
 #		Test harness to check OsInfo class operation.  Dumps all object properties, and debug data.
 #
-#	Copyrignt: (c) 2023, Kurt Schulte
+#	Copyrignt: (c) 2023, MHG Squint
 #
 #	History
 #	---------- ----- -------------- --------------------------------------------------------------------------------------------
-#	2023.04.12 01.00 KSchulte		Original Version
+#	2023.04.12 01.00 Squint         Original Version
 #	---------- ----- -------------- --------------------------------------------------------------------------------------------
 #
 
