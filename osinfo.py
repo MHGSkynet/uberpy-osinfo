@@ -172,7 +172,7 @@ class OsInfo(object):
                     self._revision  = self._version
                     self._prettyname    = "{0} {1}".format(self._name,self._version)
                     self._flavverflav   = "{0}{1}".format(self._name,self._release)
-                self._desktop       = '[None]'
+                self._desktop       = 'None'
 
             # Linux
             elif self._uname_sysname.startswith('linux'):
@@ -203,7 +203,7 @@ class OsInfo(object):
                     if match2:
                         self._version   = match2.group(1)
                     self._flavverflav   = '{0}{1}'.format(self._name,self._release)
-                    self._desktop       = 'Windows'
+                    self._desktop       = 'None'
                     matched             = True
 
                 # Debian
@@ -388,12 +388,13 @@ class OsInfo(object):
         """
         retval          = 'Unknown'
         xdgDesktop      = os.environ.get('XDG_CURRENT_DESKTOP')
-        if (re.match(r'.*GNOME.*',xdgDesktop)):
-            retval      = 'Gnome'
-        if (re.match(r'.*XFCE.*',xdgDesktop)):
-            retval      = 'XFCE'
-        if (re.match(r'.*KDE.*',xdgDesktop)):
-            retval      = 'KDE'
+        if xdgDesktop:
+            if (re.match(r'.*GNOME.*',xdgDesktop)):
+                retval      = 'Gnome'
+            if (re.match(r'.*XFCE.*',xdgDesktop)):
+                retval      = 'XFCE'
+            if (re.match(r'.*KDE.*',xdgDesktop)):
+                retval      = 'KDE'
         return retval
 
     def _qnul(self,value) -> str:
