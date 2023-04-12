@@ -52,7 +52,7 @@ class OsInfo(object):
     _codename           = 'Unknown'                 # Internal codename                                         skeletor
     _name               = 'Unknown'                 # Name (as reported by OS)                                  Debian GNU/Linux
     _prettyname         = 'Unknown'                 # Pretty name                                               Ubuntu 20.04.6 LTS
-    _flavor             = 'Unknown'                 # Flavor (standardized name)                                Windows, Ubuntu, Debian, SuSE
+    _flavor             = 'Unknown'                 # Flavor (standardized name)                                Windows, Ubuntu, Debian, OpenSUSE
     _release            = 'Unknown'                 # Major version                                             20
     _version            = 'Unknown'                 # Major/minor version                                       20.04
     _revision           = 'Unknown'                 # Complete version id                                       20.04.6 LTS
@@ -66,7 +66,7 @@ class OsInfo(object):
     _isCygwin           = False                     # OS is Cygwin
     _isDebian           = False                     # OS is Debiam
     _isUbuntu           = False                     # OS is Ubuntu
-    _isOpenSUSE         = False                     # OS is OpenSUSE
+    _isOpenSuse         = False                     # OS is OpenSuse
 
     # DEBUG DATA
     # Values returned from os.uname
@@ -285,10 +285,10 @@ class OsInfo(object):
                     lOsRelease      = self._readOsRelease()
                     if lOsRelease['NAME'].startswith('openSUSE'):
                         self._barfd('Is LINUX SUSE')
-                        self._isOpenSUSE    = True
+                        self._isOpenSuse    = True
                         self._machine       = self._platform_machine
                         self._distrobase    = 'OpenSUSE'
-                        self._codename      = ''
+                        self._codename      = 'n/a'
                         self._name          = self._qnul(lOsRelease['NAME'])
                         self._flavor        = 'OpenSUSE'
                         match = re.match(r'^openSUSE ([A-Za-z]+)$',self._name)
@@ -632,7 +632,8 @@ class OsInfo(object):
         print(outfmt.format("isLinux",self._isLinux))
         print(outfmt.format("isCygwin",self._isCygwin))
         print(outfmt.format("isDebian",self._isDebian))
-        print(outfmt.format("isUbuntu",self._isUbuntu))       
+        print(outfmt.format("isUbuntu",self._isUbuntu))
+        print(outfmt.format("isOpenSuse",self._isOpenSuse))
 
     def DumpDebugVars(self):
         """
@@ -657,211 +658,3 @@ class OsInfo(object):
         print(outfmt.format("platform_version",self._platform_version))
         print(outfmt.format("platform_machine",self._platform_machine))
         print(outfmt.format("platform_processor",self._platform_processor))
-
-#================================================================================
-# 
-#    DUMP FROM VARIOUS OPERATING SYSTEMS
-# 
-#================================================================================
-
-
-#================================================================================
-# Windows 10 
-#================================================================================
-#OS INFO
-#--------------------- ------------------------------
-#currdate              2023.04.12
-#type                  Windows
-#kernel                Unknown
-#machine               AMD64
-#distrobase            Windows
-#codename              Unknown
-#name                  Windows
-#prettyname            Windows 10.0
-#flavor                Windows
-#release               10
-#version               10.0
-#revision              10.0.19044
-#flaverflav            Windows10
-#desktop               Windows
-#isWindows             True
-#isWsl                 False
-#isPosix               False
-#isLinux               False
-#isCygwin              False
-#isDebian              False
-#isUbuntu              False
-#-- debug variables---
-#uname_sysname         Windows
-#uname_nodename        ANIMAL-W10
-#uname_release         10
-#uname_version         10.0.19044
-#uname_machine         AMD64
-#uname_processor       AMD64 Family 23 Model 49 Stepping 0, AuthenticAMD
-#platform_sysname      Windows
-#platform_nodename     ANIMAL-W10
-#platform_release      10
-#platform_version      10.0.19044
-#platform_machine      AMD64
-#platform_processor    AMD64 Family 23 Model 49 Stepping 0, AuthenticAMD
-
-#================================================================================
-# Cygwin
-#================================================================================
-#OS INFO
-#--------------------- ------------------------------
-#currdate              2023.04.12
-#type                  Linux
-#kernel                Unknown
-#machine               x86_64
-#distrobase            Cygwin
-#codename              Unknown
-#name                  Cygwin
-#prettyname            Cygwin 3.4.3
-#flavor                Cygwin
-#release               3.4
-#version               3.4.3
-#revision              3.4.3
-#flaverflav            Cygwin3.4
-#desktop               None
-#isWindows             False
-#isWsl                 False
-#isPosix               True
-#isLinux               False
-#isCygwin              True
-#isDebian              False
-#isUbuntu              False
-#-- debug data---
-#uname_sysname         cygwin_nt-10.0-19044
-#uname_nodename        ANIMAL-W10
-#uname_release         3.4.3-1.x86_64
-#uname_version         2022-12-16 12:38 UTC
-#uname_machine         x86_64
-#uname_processor       Unknown
-#platform_sysname      CYGWIN_NT-10.0-19044
-#platform_nodename     ANIMAL-W10
-#platform_release      3.4.3-1.x86_64
-#platform_version      2022-12-16 12:38 UTC
-#platform_machine      x86_64
-#platform_processor
-
-#================================================================================
-# WSL Linux - Ubuntu 22.04 LTS
-#================================================================================
-#OS INFO
-#--------------------- ------------------------------
-#currdate              2023.04.12
-#type                  Linux WSL
-#kernel                Unknown
-#machine               x86_64
-#distrobase            debian
-#codename              jammy
-#name                  Ubuntu
-#prettyname            Ubuntu 22.04.2 LTS
-#flavor                Ubuntu
-#release               22.04
-#version               22.04.2 LTS
-#revision              22.04.2 LTS (Jammy Jellyfish)
-#flaverflav            Ubuntu22.04
-#desktop               Windows
-#isWindows             False
-#isWsl                 True
-#isPosix               True
-#isLinux               True
-#isCygwin              False
-#isDebian              False
-#isUbuntu              False
-#-- debug data---
-#uname_sysname         linux
-#uname_nodename        ANIMAL-W10
-#uname_release         5.15.90.1-microsoft-standard-WSL2
-#uname_version         #1 SMP Fri Jan 27 02:56:13 UTC 2023
-#uname_machine         x86_64
-#uname_processor       Unknown
-#platform_sysname      Linux
-#platform_nodename     ANIMAL-W10
-#platform_release      5.15.90.1-microsoft-standard-WSL2
-#platform_version      #1 SMP Fri Jan 27 02:56:13 UTC 2023
-#platform_machine      x86_64
-#platform_processor    x86_64
-
-#================================================================================
-# Linux - Debian 11.6
-#================================================================================
-#OS INFO
-#--------------------- ------------------------------
-#currdate              2023.04.12                    
-#type                  Linux                         
-#kernel                Unknown                       
-#machine               x86_64                        
-#distrobase            Debian                        
-#codename              bullseye                      
-#name                  Debian GNU/Linux              
-#prettyname            Debian GNU/Linux 11 (bullseye)
-#flavor                Debian                        
-#release               11                            
-#version               11.6                          
-#revision              11.6                          
-#flaverflav            Debian11.6                    
-#desktop               Unknown                       
-#isWindows             False
-#isWsl                 False
-#isPosix               True
-#isLinux               True
-#isCygwin              False
-#isDebian              True
-#isUbuntu              False
-#-- debug data---
-#uname_sysname         linux                         
-#uname_nodename        maude-d11-01                  
-#uname_release         5.10.0-11-amd64               
-#uname_version         #1 SMP Debian 5.10.92-1 (2022-01-18)
-#uname_machine         x86_64                        
-#uname_processor       Unknown                       
-#platform_sysname      Linux                         
-#platform_nodename     maude-d11-01                  
-#platform_release      5.10.0-11-amd64               
-#platform_version      #1 SMP Debian 5.10.92-1 (2022-01-18)
-#platform_machine      x86_64                        
-#platform_processor               
-
-#================================================================================
-# Linux - Ubuntu 20.04 LTS
-#================================================================================
-#OS INFO
-#--------------------- ------------------------------
-#currdate              2023.04.12                    
-#type                  Linux                         
-#kernel                Unknown                       
-#machine               x86_64                        
-#distrobase            Debian                        
-#codename              focal                         
-#name                  Ubuntu                        
-#prettyname            Ubuntu 20.04.6 LTS            
-#flavor                Ubuntu                        
-#release               20.04                         
-#version               bullseye/sid                  
-#revision              20.04.6 LTS (Focal Fossa)     
-#flaverflav            Ubuntu20.04                   
-#desktop               Unknown                       
-#isWindows             False
-#isWsl                 False
-#isPosix               True
-#isLinux               True
-#isCygwin              False
-#isDebian              False
-#isUbuntu              True
-#-- debug data---
-#uname_sysname         linux                         
-#uname_nodename        ubuntu                        
-#uname_release         5.15.0-69-generic             
-#uname_version         #76~20.04.1-Ubuntu SMP Mon Mar 20 15:54:19 UTC 2023
-#uname_machine         x86_64                        
-#uname_processor       Unknown                       
-#platform_sysname      Linux                         
-#platform_nodename     ubuntu                        
-#platform_release      5.15.0-69-generic             
-#platform_version      #76~20.04.1-Ubuntu SMP Mon Mar 20 15:54:19 UTC 2023
-#platform_machine      x86_64                        
-#platform_processor    x86_64                        
-#root@ubuntu:/mnt/kode/UberGen/pyth                    
