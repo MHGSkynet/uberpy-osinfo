@@ -290,7 +290,6 @@ class OsInfo(object):
                         self._distrobase    = 'OpenSUSE'
                         self._codename      = ''
                         self._name          = self._qnul(lOsRelease['NAME'])
-                        self._prettyname    = '{0} {1}'.format(self._qnul(lOsRelease['PRETTY_NAME']),self._version)
                         self._flavor        = 'OpenSUSE'
                         match = re.match(r'^openSUSE ([A-Za-z]+)$',self._name)
                         if match:
@@ -298,6 +297,7 @@ class OsInfo(object):
                         self._version       = self._qnul(lOsRelease['VERSION_ID'])
                         self._revision      = self._qnul(lOsRelease['VERSION_ID'])                      
                         self._flavverflav   = '{0}{1}'.format(self._flavor,self._release)
+                        self._prettyname    = '{0} {1}'.format(self._qnul(lOsRelease['PRETTY_NAME']),self._version)
                         matched             = True               
                         
                 # Unknown Linux
