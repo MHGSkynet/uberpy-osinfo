@@ -66,6 +66,7 @@ class OsInfo(object):
     _isCygwin           = False                     # OS is Cygwin
     _isDebian           = False                     # OS is Debiam
     _isUbuntu           = False                     # OS is Ubuntu
+    _isOpenSUSE         = False                     # OS is OpenSUSE
 
     # DEBUG DATA
     # Values returned from os.uname
@@ -265,6 +266,40 @@ class OsInfo(object):
                         self._flavverflav   = '{0}{1}'.format(self._name,self._release)
                         matched             = True
 
+                # OpenSUSE Tumbleweed 2023.04.11
+                #   > cat /etc/os-release
+                #       NAME="openSUSE Tumbleweed"
+                #       # VERSION="20230411"
+                #       ID="opensuse-tumbleweed"
+                #       ID_LIKE="opensuse suse"
+                #       VERSION_ID="20230411"
+                #       PRETTY_NAME="openSUSE Tumbleweed"
+                #       ANSI_COLOR="0;32"
+                #       CPE_NAME="cpe:/o:opensuse:tumbleweed:20230411"
+                #       BUG_REPORT_URL="https://bugzilla.opensuse.org"
+                #       SUPPORT_URL="https://bugs.opensuse.org"
+                #       HOME_URL="https://www.opensuse.org"
+                #       DOCUMENTATION_URL="https://en.opensuse.org/Portal:Tumbleweed"
+                #       LOGO="distributor-logo-Tumbleweed"
+                if not matched:
+                    lOsRelease      = self._readOsRelease()
+                    if lOsRelease['NAME'].startswith('openSUSE'):
+                        self._barfd('Is LINUX SUSE')
+                        self._isOpenSUSE    = True
+                        self._machine       = self._platform_machine
+                        self._distrobase    = 'OpenSUSE'
+                        self._codename      = ''
+                        self._name          = self._qnul(lOsRelease['NAME'])
+                        self._prettyname    = '{0} {1}'.format(self._qnul(lOsRelease['PRETTY_NAME']),self._version)
+                        self._flavor        = 'OpenSUSE'
+                        match = re.match(r'^openSUSE ([A-Za-z]+)$',self._name)
+                        if match:
+                            self._release       = match.group(1)
+                        self._version       = self._qnul(lOsRelease['VERSION_ID'])
+                        self._revision      = self._qnul(lOsRelease['VERSION_ID'])                      
+                        self._flavverflav   = '{0}{1}'.format(self._flavor,self._release)
+                        matched             = True               
+                        
                 # Unknown Linux
                 if not matched:
                     print('Unknown flavor of linux! {}'.format(self._uname_sysname))
