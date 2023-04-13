@@ -17,6 +17,9 @@ Test:
     cd ./uberpy-osinfo
     python3 test-osinfo.py
 
+Public Properties:
+    
+
 Copyright: (c) 2023, MHG Squint
 
 History

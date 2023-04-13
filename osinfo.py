@@ -10,7 +10,7 @@
 #       Cygwin          all versions
 #       Debian          10, 11
 #       Ubuntu          20, 22
-#       CentOS          
+#       CentOS          Linux 8, Stream 8+
 #       OpenSUSE        Tumbleweed
 #
 #	Copyrignt: (c) 2023, MHG Squint
@@ -22,6 +22,7 @@
 #
 
 from datetime import datetime
+from doctest import OutputChecker
 import os
 import platform
 import re
@@ -58,15 +59,23 @@ class OsInfo(object):
     _revision           = 'Unknown'                 # Complete version id                                       20.04.6 LTS
     _flavverflav        = 'Unknown'                 # Flavor, Major version, and Minor version, no spaces       Ubuntu20.04
     _desktop            = 'Unknown'                 # Desktop framework                                         Gnome, XFCE, KDE, Windows
+
+    _title              = ''                        # Title for reporting header
     
     _isWindows          = False                     # OS is Windows
     _isWsl              = False                     # OS is Windows Subsystem for Linux of some sort
     _isPosix            = False                     # OS is Posix of some sort
     _isLinux            = False                     # OS is Linux of some sort
     _isCygwin           = False                     # OS is Cygwin
-    _isDebian           = False                     # OS is Debiam
+    _isDebian           = False                     # OS is Debian
     _isUbuntu           = False                     # OS is Ubuntu
     _isOpenSuse         = False                     # OS is OpenSuse
+    _isRedhat           = False                     # OS is Redhat
+    _isCentOS           = False                     # OS is CentOS
+
+    _logEnable          = True                      # Log enable
+    _logFile            = None                      # Log file name.  Default={flavverflav}.tct
+    _logChan            = None                      # Log file handle
 
     # DEBUG DATA
     # Values returned from os.uname
@@ -303,9 +312,42 @@ class OsInfo(object):
                         self._prettyname    = '{0} {1}'.format(self._qnul(lOsRelease['PRETTY_NAME']),self._version)
                         matched             = True               
                         
-                # Unknown Linux
+                # Unknown Linux, based on uname.  Try using /etc/os-release only...
                 if not matched:
-                    print('Unknown flavor of linux! {}'.format(self._uname_sysname))
+                    lOsRelease          = self._readOsRelease()
+                    
+                    # CENTOS
+                    #
+                    # cat /etc/os-release
+                    #       NAME="CentOS Stream"
+                    #       VERSION="8"
+                    #       ID="centos"
+                    #       ID_LIKE="rhel fedora"
+                    #       VERSION_ID="8"
+                    #       PLATFORM_ID="platform:el8"
+                    #       PRETTY_NAME="CentOS Stream 8"
+                    #       ANSI_COLOR="0;31"
+                    #       CPE_NAME="cpe:/o:centos:centos:8"
+                    #       HOME_URL="https://centos.org/"
+                    #       BUG_REPORT_URL="https://bugzilla.redhat.com/"
+                    #       REDHAT_SUPPORT_PRODUCT="Red Hat Enterprise Linux 8"
+                    #       REDHAT_SUPPORT_PRODUCT_VERSION="CentOS Stream"
+                    if self._qnul(lOsRelease['ID']) == 'centos':
+                        self._isCentOS      = True
+                        self._machine       = self._uname_machine
+                        self._prettyname    = self._qnul(lOsRelease['PRETTY_NAME'])
+                        self._name          = self._qnul(lOsRelease['NAME'])
+                        self._flavor        = 'CentOS'
+                        self._release       = self._qnul(lOsRelease['VERSION_ID'])
+                        self._version       = self._qnul(lOsRelease['VERSION'])
+                        self._revision      = self._qnul(lOsRelease['VERSION'])
+                        self._codename      = 'n/a'
+                        self._distrobase    = 'Redhat'
+                        self._flavverflav   = '{0}{1}'.format(self._flavor,self._release)
+                        matched             = True
+
+                if not matched:
+                    print('Unknown flavor of linux! {}'.format())
        
 
             # Unknown flavor Linux
@@ -317,6 +359,60 @@ class OsInfo(object):
     #
     # Private Methods
     #
+   
+    def _logInit(self):
+        """
+        Log Init
+
+            Initialize Log file
+
+        Returns:
+        none
+        """
+        if self._logEnable:
+            try:
+                self._logChan   = open(self.logFile(),'w')
+
+            except FileNotFoundError:
+                print("Error: Log File '{0}' not found.".format(self._logFile))
+            except IOError:
+                print("Error: Could not open Log file '{0}'.".format(self._logFile))        
+
+    def _logOpen(self):
+        """
+        Log Open
+
+            Open log file for writing, if it isn't already
+
+        Returns:
+        none
+        """
+        if self._logEnable and self._logChan is None:
+            self._logChan     = open(self.logFile(),"a")
+
+    def _logWrite(self,text):
+        """
+        Log Write 
+
+            Write text to log file
+
+        Returns:
+        none
+        """ 
+        if self._logEnable:
+            self._logChan.write(text + "\n")
+
+    def _barf(self,text):
+        """
+        Barf 
+
+            Print and log text
+
+        Returns:
+        none
+        """
+        print(text)
+        self._logWrite(text)
 
     def _barfd(self,text):
         """
@@ -405,7 +501,7 @@ class OsInfo(object):
         return retval
 
     #
-    # Public Properties
+    # Public Properties - Getters
     #
     def type(self) -> str:
         """
@@ -532,6 +628,33 @@ class OsInfo(object):
         """
         return self._desktop
       
+    def title(self) -> str:
+        """
+        Title
+
+           Title to be used for output header.  Default={prettyname}
+        
+        Returns:
+        str:    Title           
+        """
+        if not self._title:
+            self._title     = self._prettyname
+        return self._title
+
+    def logFile(self) -> str:
+        """
+        Log File 
+
+            Log File Name
+
+        Returns:
+        none
+        """
+        if self._logFile is None:
+            self._logFile   = 'osinfo-data-' + self._flavverflav + '.txt'
+
+        return self._logFile
+
     # Logical Properties
 
     def isWindows(self) -> bool:
@@ -597,6 +720,46 @@ class OsInfo(object):
         """
         return self._isUbuntu
 
+    def isOpenSuse(self) -> bool:
+        """
+        Is OpenSUSE
+
+        Returns:
+        bool:   isOpenSuse      (true/false)
+        """
+        return self._isOpenSuse
+
+    def isRedhat(self) -> bool:
+        """
+        Is Redhat
+
+        Returns:
+        bool:   isRedhat       (true/false)
+        """
+        return self._isRedhat
+
+    def isCentOS(self) -> bool:
+        """
+        Is CentOS
+
+        Returns:
+        bool:   isCentOS       (true/false)
+        """
+        return self._isCentOS
+
+    #
+    # Public Properties - Setters
+    #
+    def setTitle(self,title):
+        """
+        Set Title
+        
+        Returns:
+        none
+        """
+        self._title     = title
+
+
     #
     # Public Methods
     #
@@ -610,8 +773,13 @@ class OsInfo(object):
         Returns:
         none
         """
+       
+        self._logInit()
+
         outfmt="{0:21} {1:30}"
         dashes=outfmt.format("-"*21,"-"*30)
+        print("="*80)
+        print('{}'.format(self._qnul(self.title())))
         print("="*80)
         print("OS INFO")
         print(dashes)
@@ -638,6 +806,8 @@ class OsInfo(object):
         print(outfmt.format("isDebian",self._isDebian))
         print(outfmt.format("isUbuntu",self._isUbuntu))
         print(outfmt.format("isOpenSuse",self._isOpenSuse))
+        print(outfmt.format("isRedhat",self._isRedhat))
+        print(outfmt.format("isCentOS",self._isCentOS))
 
     def DumpDebugVars(self):
         """
@@ -662,3 +832,15 @@ class OsInfo(object):
         print(outfmt.format("platform_version",self._platform_version))
         print(outfmt.format("platform_machine",self._platform_machine))
         print(outfmt.format("platform_processor",self._platform_processor))
+
+        if self._isLinux:
+            try:
+                print('-- /etc/os-release --')
+                releaseFile = '/etc/os-release'
+                with open(releaseFile,'r') as fh:
+                    for line in fh:
+                        print(line.strip())
+            except FileNotFoundError:
+                print("Error: File '{0}' not found.".format(releaseFile))
+            except IOError:
+                print("Error: Could not open file '{0}'.".format(releaseFile))

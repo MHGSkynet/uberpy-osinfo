@@ -133,7 +133,7 @@ platform_processor    x86_64
 ================================================================================
 OS INFO
 --------------------- ------------------------------
-currdate              2023.04.12                    
+currdate              2023.04.13                    
 type                  Linux                         
 kernel                Unknown                       
 machine               x86_64                        
@@ -155,6 +155,8 @@ isCygwin              False
 isDebian              True
 isUbuntu              False
 isOpenSuse            False
+isRedhat              False
+isCentOS              False
 -- debug data---
 uname_sysname         linux                         
 uname_nodename        maude-d11-01                  
@@ -167,14 +169,14 @@ platform_nodename     maude-d11-01
 platform_release      5.10.0-11-amd64               
 platform_version      #1 SMP Debian 5.10.92-1 (2022-01-18)
 platform_machine      x86_64                        
-platform_processor                        
+platform_processor                                                   
 
 #================================================================================
 # Linux - Ubuntu 20.04 LTS
 ================================================================================
 OS INFO
 --------------------- ------------------------------
-currdate              2023.04.12                    
+currdate              2023.04.13                    
 type                  Linux                         
 kernel                Unknown                       
 machine               x86_64                        
@@ -196,26 +198,43 @@ isCygwin              False
 isDebian              False
 isUbuntu              True
 isOpenSuse            False
+isRedhat              False
+isCentOS              False
 -- debug data---
 uname_sysname         linux                         
-uname_nodename        ubuntu                        
+uname_nodename        tensor-u2004-01.cognogistics.com
 uname_release         5.15.0-69-generic             
 uname_version         #76~20.04.1-Ubuntu SMP Mon Mar 20 15:54:19 UTC 2023
 uname_machine         x86_64                        
 uname_processor       Unknown                       
 platform_sysname      Linux                         
-platform_nodename     ubuntu                        
+platform_nodename     tensor-u2004-01.cognogistics.com
 platform_release      5.15.0-69-generic             
 platform_version      #76~20.04.1-Ubuntu SMP Mon Mar 20 15:54:19 UTC 2023
 platform_machine      x86_64                        
-platform_processor    x86_64                     
+platform_processor    x86_64                        
+-- /etc/os-release --
+NAME="Ubuntu"
+VERSION="20.04.6 LTS (Focal Fossa)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 20.04.6 LTS"
+VERSION_ID="20.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=focal
+UBUNTU_CODENAME=focal
+                       
+           
 
 ================================================================================
 OpenSUSE Tumbleweed 2023.04.12
 ================================================================================
 OS INFO
 --------------------- ------------------------------
-currdate              2023.04.12                    
+currdate              2023.04.13                    
 type                  Linux                         
 kernel                Unknown                       
 machine               x86_64                        
@@ -237,17 +256,134 @@ isCygwin              False
 isDebian              False
 isUbuntu              False
 isOpenSuse            True
+isRedhat              False
+isCentOS              False
 -- debug data---
 uname_sysname         linux                         
-uname_nodename        localhost.localdomain         
+uname_nodename        suzyq-t23-01.cognogistics.com 
 uname_release         6.2.9-1-default               
 uname_version         #1 SMP PREEMPT_DYNAMIC Thu Mar 30 11:30:50 UTC 2023 (7a187a3)
 uname_machine         x86_64                        
 uname_processor       Unknown                       
 platform_sysname      Linux                         
-platform_nodename     localhost.localdomain         
+platform_nodename     suzyq-t23-01.cognogistics.com 
 platform_release      6.2.9-1-default               
 platform_version      #1 SMP PREEMPT_DYNAMIC Thu Mar 30 11:30:50 UTC 2023 (7a187a3)
 platform_machine      x86_64                        
-platform_processor    x86_64                      
+platform_processor    x86_64                        
+-- /etc/os-release --
+NAME="openSUSE Tumbleweed"
+# VERSION="20230411"
+ID="opensuse-tumbleweed"
+ID_LIKE="opensuse suse"
+VERSION_ID="20230411"
+PRETTY_NAME="openSUSE Tumbleweed"
+ANSI_COLOR="0;32"
+CPE_NAME="cpe:/o:opensuse:tumbleweed:20230411"
+BUG_REPORT_URL="https://bugzilla.opensuse.org"
+SUPPORT_URL="https://bugs.opensuse.org"
+HOME_URL="https://www.opensuse.org"
+DOCUMENTATION_URL="https://en.opensuse.org/Portal:Tumbleweed"
+LOGO="distributor-logo-Tumbleweed"
+                              
 
+================================================================================
+CentOS Stream 8
+================================================================================
+OS INFO
+--------------------- ------------------------------
+currdate              2023.04.13                    
+type                  Linux                         
+kernel                Unknown                       
+machine               x86_64                        
+distrobase            Redhat                        
+codename              n/a                           
+name                  CentOS Stream                 
+prettyname            CentOS Stream 8               
+flavor                CentOS                        
+release               8                             
+version               8                             
+revision              8                             
+flaverflav            CentOS8                       
+desktop               Gnome                         
+isWindows             False
+isWsl                 False
+isPosix               True
+isLinux               True
+isCygwin              False
+isDebian              False
+isUbuntu              False
+isOpenSuse            False
+isRedhat              False
+isCentOS              True
+-- debug data---
+uname_sysname         linux                         
+uname_nodename        centaur-cs08-01.cognogistics.com
+uname_release         4.18.0-485.el8.x86_64         
+uname_version         #1 SMP Fri Apr 7 20:13:02 UTC 2023
+uname_machine         x86_64                        
+uname_processor       Unknown                       
+platform_sysname      Linux                         
+platform_nodename     centaur-cs08-01.cognogistics.com
+platform_release      4.18.0-485.el8.x86_64         
+platform_version      #1 SMP Fri Apr 7 20:13:02 UTC 2023
+platform_machine      x86_64                        
+platform_processor    x86_64        
+
+================================================================================
+CentOS Stream 9
+================================================================================
+OS INFO
+--------------------- ------------------------------
+currdate              2023.04.13                    
+type                  Linux                         
+kernel                Unknown                       
+machine               x86_64                        
+distrobase            Redhat                        
+codename              n/a                           
+name                  CentOS Stream                 
+prettyname            CentOS Stream 9               
+flavor                CentOS                        
+release               9                             
+version               9                             
+revision              9                             
+flaverflav            CentOS9                       
+desktop               Gnome                         
+isWindows             False
+isWsl                 False
+isPosix               True
+isLinux               True
+isCygwin              False
+isDebian              False
+isUbuntu              False
+isOpenSuse            False
+isRedhat              False
+isCentOS              True
+-- debug data---
+uname_sysname         linux                         
+uname_nodename        centaur-cs09-01.cognogistics.com
+uname_release         5.14.0-295.el9.x86_64         
+uname_version         #1 SMP PREEMPT_DYNAMIC Sun Apr 2 17:13:26 UTC 2023
+uname_machine         x86_64                        
+uname_processor       Unknown                       
+platform_sysname      Linux                         
+platform_nodename     centaur-cs09-01.cognogistics.com
+platform_release      5.14.0-295.el9.x86_64         
+platform_version      #1 SMP PREEMPT_DYNAMIC Sun Apr 2 17:13:26 UTC 2023
+platform_machine      x86_64                        
+platform_processor    x86_64                        
+-- /etc/os-release --
+NAME="CentOS Stream"
+VERSION="9"
+ID="centos"
+ID_LIKE="rhel fedora"
+VERSION_ID="9"
+PLATFORM_ID="platform:el9"
+PRETTY_NAME="CentOS Stream 9"
+ANSI_COLOR="0;31"
+LOGO="fedora-logo-icon"
+CPE_NAME="cpe:/o:centos:centos:9"
+HOME_URL="https://centos.org/"
+BUG_REPORT_URL="https://bugzilla.redhat.com/"
+REDHAT_SUPPORT_PRODUCT="Red Hat Enterprise Linux 9"
+REDHAT_SUPPORT_PRODUCT_VERSION="CentOS Stream"
