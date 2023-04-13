@@ -113,14 +113,15 @@ class OsInfo(object):
                 self._version   = match.group(1)
             else:
                 self._version   = lVersion
- 
+        
             l_uname                     = platform.uname()
-            self._uname_sysname         = l_uname.system
-            self._uname_nodename        = l_uname.node
-            self._uname_release         = l_uname.release
-            self._uname_version         = l_uname.version
-            self._uname_machine         = l_uname.machine
-            self._uname_processor       = l_uname.processor
+            # os.uname does not exist on Windows python
+            self._uname_sysname         = 'n/a'
+            self._uname_nodename        = 'n/a'
+            self._uname_release         = 'n/a'
+            self._uname_version         = 'n/a'
+            self._uname_machine         = 'n/a'
+            self._uname_processor       = 'n/a'
 
             self._platform_sysname     = l_uname.system
             self._platform_nodename    = l_uname.node
@@ -129,13 +130,13 @@ class OsInfo(object):
             self._platform_machine     = l_uname.machine
             self._platform_processor   = l_uname.processor
 
-            self._flavor                = 'Windows'
+            self._machine               = self._platform_machine
             self._name                  = 'Windows'
             self._distrobase            = 'Windows'
-            self._machine               = self._uname_machine
-            self._revision              = self._uname_version
-            self._prettyname            = '{0} {1}'.format(self._name,self._version)
+            self._flavor                = 'Windows'
+            self._revision              = self._platform_version
             self._flavverflav           = '{0}{1}'.format(self._name,self._release)
+            self._prettyname            = '{0} {1}'.format(self._name,self._version)
 
             self._desktop               = 'Windows'
 

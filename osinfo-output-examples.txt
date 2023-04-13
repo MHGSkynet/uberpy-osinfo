@@ -7,7 +7,7 @@
 
 #================================================================================
 # Windows 10 
-#================================================================================
+================================================================================
 OS INFO
 --------------------- ------------------------------
 currdate              2023.04.12
@@ -31,13 +31,14 @@ isLinux               False
 isCygwin              False
 isDebian              False
 isUbuntu              False
--- debug variables---
-uname_sysname         Windows
-uname_nodename        ANIMAL-W10
-uname_release         10
-uname_version         10.0.19044
-uname_machine         AMD64
-uname_processor       AMD64 Family 23 Model 49 Stepping 0, AuthenticAMD
+isOpenSuse            False
+-- debug data---
+uname_sysname         n/a
+uname_nodename        n/a
+uname_release         n/a
+uname_version         n/a
+uname_machine         n/a
+uname_processor       n/a
 platform_sysname      Windows
 platform_nodename     ANIMAL-W10
 platform_release      10
@@ -208,7 +209,6 @@ platform_release      5.15.0-69-generic
 platform_version      #76~20.04.1-Ubuntu SMP Mon Mar 20 15:54:19 UTC 2023
 platform_machine      x86_64                        
 platform_processor    x86_64                     
-
 
 ================================================================================
 OpenSUSE Tumbleweed 2023.04.12
