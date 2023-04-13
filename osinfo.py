@@ -22,7 +22,6 @@
 #
 
 from datetime import datetime
-from doctest import OutputChecker
 import os
 import platform
 import re
@@ -390,6 +389,19 @@ class OsInfo(object):
         if self._logEnable and self._logChan is None:
             self._logChan     = open(self.logFile(),"a")
 
+    def _logClose(self):
+        """
+        Log Close
+
+            Close log file
+
+        Returns:
+        none
+        """
+        if self._logChan:
+            self._logChan.close()
+            self._logChan   = None
+
     def _logWrite(self,text):
         """
         Log Write 
@@ -651,7 +663,11 @@ class OsInfo(object):
         none
         """
         if self._logFile is None:
-            self._logFile   = 'osinfo-data-' + self._flavverflav + '.txt'
+            default_folder  = '.testout'
+            self._logFile   = '.'
+            if os.path.exists(default_folder):
+                self._logFile   = default_folder
+            self._logFile   = self._logFile + '/osinfo-testout-' + self._flavverflav + '.txt'
 
         return self._logFile
 
@@ -809,6 +825,8 @@ class OsInfo(object):
         print(outfmt.format("isRedhat",self._isRedhat))
         print(outfmt.format("isCentOS",self._isCentOS))
 
+        self._logClose()
+
     def DumpDebugVars(self):
         """
         Dump Debug Variables
@@ -844,3 +862,5 @@ class OsInfo(object):
                 print("Error: File '{0}' not found.".format(releaseFile))
             except IOError:
                 print("Error: Could not open file '{0}'.".format(releaseFile))
+
+        self._logClose()
